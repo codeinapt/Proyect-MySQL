@@ -5,7 +5,7 @@
 CREATE DATABASE Films;
 
 -- -----------------------------------------------------
--- lUEGO DE ESTAR CREADA SE SELECCIONA PARA TRABAJAR EN ELLA
+-- LUEGO DE ESTAR CREADA SE SELECCIONA PARA TRABAJAR EN ELLA
 -- -----------------------------------------------------
 
 USE Films;
@@ -117,20 +117,26 @@ CREATE TABLE categoria_peliculas (
  );
 
 -- -----------------------------------------------------
--- SE ALTERA LA TABLA CATEGORIA PELICULAS PARA AGREGAR LA LLAVE FORANEA DE EL ID DE LAS PELICULAS PARA REFERENCIARLA CON UNA O MAS CATEGORIAS
+-- SE ALTERA LA TABLA CATEGORIA PELICULAS PARA AGREGAR LA LLAVE FORANEA 
+-- DE EL ID DE LAS PELICULAS PARA REFERENCIARLA CON UNA O MAS CATEGORIAS
+-- SE AGREGA LA FUNCIONALIDAD DE ACTUALIZACIÓN EN CASCADA
 -- -----------------------------------------------------
 
 ALTER TABLE categoria_peliculas  ADD CONSTRAINT id_Peliculas_categorias FOREIGN KEY (fk_id_Peliculas) REFERENCES peliculas (id_Pelicula) ON UPDATE CASCADE;
 
 -- -----------------------------------------------------
--- SE ALTERA LA TABLA CATEGORIA PELICULAS PARA AGREGAR LA LLAVE FORANEA DE EL ID DE LAS CATEGORIAS PARA REFERENCIARLA CON UNA O MAS PELICULAS 
+-- SE ALTERA LA TABLA CATEGORIA PELICULAS PARA AGREGAR LA LLAVE FORANEA 
+-- DE EL ID DE LAS CATEGORIAS PARA REFERENCIARLA CON UNA O MAS PELICULAS
+-- SE AGREGA LA FUNCIONALIDAD DE ACTUALIZACIÓN EN CASCADA 
 -- -----------------------------------------------------
 
 ALTER TABLE categoria_peliculas ADD CONSTRAINT id_Cate_Peliculas FOREIGN KEY (fk_id_Cate) REFERENCES categoria (id_Cate) ON UPDATE CASCADE;
 
 -- -----------------------------------------------------
--- SE ALTERA LA TABLA CATEGORIA PELICULAS PARA DEFINIR LOS DOS CAMPOS CREADOS COMO LLLAVES PRIMARIAS
+-- SE ALTERA LA TABLA CATEGORIA PELICULAS PARA DEFINIR LOS DOS CAMPOS 
+-- CREADOS COMO LLLAVES PRIMARIAS
 -- -----------------------------------------------------
+
 ALTER TABLE categoria_peliculas ADD PRIMARY KEY (fk_id_Peliculas, fk_id_Cate);
 
 -- -----------------------------------------------------
@@ -161,9 +167,27 @@ fk_id_Cate INT NOT NULL,
 fk_id_Series INT NOT NULL
 );
 
+-- -----------------------------------------------------
+-- SE ALTERA LA TABLA CATEGORIA SERIES PARA AGREGAR LA LLAVE FORANEA 
+-- DE EL ID DE LAS CATEGORIAS PARA REFERENCIARLA CON UNA O MAS SERIES
+-- SE AGREGA LA FUNCIONALIDAD DE ACTUALIZACIÓN EN CASCADA 
+-- -----------------------------------------------------
 
 ALTER TABLE categoria_serie ADD CONSTRAINT id_Cate_Series FOREIGN KEY (fk_id_Cate) REFERENCES categoria (id_Cate) ON UPDATE CASCADE; 
+
+-- -----------------------------------------------------
+-- SE ALTERA LA TABLA CATEGORIA SERIES PARA AGREGAR LA LLAVE FORANEA 
+-- DE EL ID DE LAS SERIES PARA REFERENCIARLA CON UNA O MAS CATEGORIAS
+-- SE AGREGA LA FUNCIONALIDAD DE ACTUALIZACIÓN EN CASCADA 
+-- -----------------------------------------------------
+
 ALTER TABLE categoria_serie ADD CONSTRAINT id_Series_Cate FOREIGN KEY (fk_id_Series) REFERENCES series (id_Series) ON UPDATE CASCADE;
+
+-- -----------------------------------------------------
+-- SE ALTERA LA TABLA CATEGORIA SERIES PARA DEFINIR LOS DOS CAMPOS 
+-- CREADOS COMO LLLAVES PRIMARIAS
+-- -----------------------------------------------------
+
 ALTER TABLE categoria_serie ADD PRIMARY KEY (fk_id_Cate, fk_id_Series);
 
 -- -----------------------------------------------------
@@ -184,8 +208,28 @@ CREATE TABLE pelicula_idioma (
 fk_id_Idioma INT NOT NULL,
 fk_id_Pelicula INT NOT NULL
 );
+
+-- -----------------------------------------------------
+-- SE ALTERA LA TABLA PELICULAS IDIOMAS PARA AGREGAR LA LLAVE FORANEA 
+-- DE EL ID DE LOS IDIOMAS  PARA REFERENCIARLA CON UNA O MAS PELICULAS
+-- SE AGREGA LA FUNCIONALIDAD DE ACTUALIZACIÓN EN CASCADA 
+-- -----------------------------------------------------
+
 ALTER TABLE pelicula_idioma ADD CONSTRAINT id_Idioma_Pelicula FOREIGN KEY (fk_id_Idioma) REFERENCES idioma (id_Idioma) ON UPDATE CASCADE;
+
+-- -----------------------------------------------------
+-- SE ALTERA LA TABLA PELICULAS IDIOMAS PARA AGREGAR LA LLAVE FORANEA 
+-- DE EL ID DE LAS PELICULAS   PARA REFERENCIARLA CON UNO O MAS IDIOMAS
+-- SE AGREGA LA FUNCIONALIDAD DE ACTUALIZACIÓN EN CASCADA 
+-- -----------------------------------------------------
+
 ALTER TABLE pelicula_idioma ADD CONSTRAINT id_Pelicula_Idioma FOREIGN KEY (fk_id_Pelicula) REFERENCES peliculas (id_Pelicula) ON UPDATE CASCADE;
+
+-- -----------------------------------------------------
+-- SE ALTERA LA TABLA PELICULA IDIOMA PARA DEFINIR LOS DOS CAMPOS 
+-- CREADOS COMO LLLAVES PRIMARIAS
+-- -----------------------------------------------------
+
 ALTER TABLE pelicula_idioma ADD PRIMARY KEY (fk_id_Pelicula, fk_id_Idioma);
 
 -- -----------------------------------------------------
@@ -205,13 +249,27 @@ fk_id_Rol INT NOT NULL,
 FOREIGN KEY (fk_id_Documento) REFERENCES tipo_documento (id_Documento),
 FOREIGN KEY (fk_id_Rol) REFERENCES rol (id_Rol),
 PRIMARY KEY (numero_Documento, fk_id_Documento)
-); 
+);
+
+-- -----------------------------------------------------
+-- SE ALTERA LA TABLA USUARIO PARA AGREGAR UN NUEVO CAMPO PARA
+-- ALMACENAR EL IDENTIFICADOR DEL PLAN CONTRATADO POR EL USUARIO
+-- -----------------------------------------------------
+ 
 ALTER TABLE usuario ADD fk_id_Plan INT NOT NULL;
+
+-- -----------------------------------------------------
+-- SE ALTERA LA TABLA USUARIO PARA AGREGAR LA LLAVE FORANEA 
+-- DE EL ID DE LOS PLANES  PARA REFERENCIAR UN PLAN CON UN USUARIO
+--  DETERMINADO 
+-- -----------------------------------------------------
+
 ALTER TABLE usuario add FOREIGN KEY (fk_id_Plan) REFERENCES plan (id_Plan);
 
 -- -----------------------------------------------------
 -- CREACION DE TABLA FACTURA
 -- -----------------------------------------------------
+
 CREATE TABLE factura (
 id_Factura INT NOT NULL,
 fecha DATE NOT NULL,
@@ -225,6 +283,11 @@ FOREIGN KEY (fk_id_tipo_Pago) REFERENCES tipo_Pago (id_tipo_Pago),
 FOREIGN KEY (fk_id_Plan) REFERENCES plan (id_Plan),
 PRIMARY KEY (id_Factura, fk_numero_Documento, fk_id_Documento)
 );
+
+-- -----------------------------------------------------
+-- SE ALTERA LA TABLA FACTURA PARA MODIFICAR LA ESTRUCTURA DE LA  
+-- COLUMNA ID FACTURA Y DE ESTE MODO ESTE SE INCREMENTE AUTOMATICAMENTE
+-- -----------------------------------------------------
 
 ALTER TABLE factura MODIFY COLUMN id_Factura INT NOT NULL AUTO_INCREMENT;
 
@@ -249,9 +312,29 @@ PRIMARY KEY (id_Perfil)
 CREATE TABLE perfil_pelicula (
 fk_id_Pelicula INT NOT NULL,
 fk_id_Perfil INT NOT NULL
-); 
+);
+
+-- -----------------------------------------------------
+-- SE ALTERA LA TABLA PERFIL PELICULAS PARA AGREGAR LA LLAVE FORANEA 
+-- DE EL ID DE LAS PELICULAS  PARA REFERENCIARLA CON UNO O MAS PERFILES
+-- SE AGREGA LA FUNCIONALIDAD DE ACTUALIZACIÓN EN CASCADA 
+-- -----------------------------------------------------
+ 
 ALTER TABLE perfil_pelicula ADD CONSTRAINT id_Pelicula_Perfil FOREIGN KEY (fk_id_Pelicula) REFERENCES peliculas (id_Pelicula) ON UPDATE CASCADE;
+
+-- -----------------------------------------------------
+-- SE ALTERA LA TABLA PERFIL PELICULAS PARA AGREGAR LA LLAVE FORANEA 
+-- DE EL ID DE LOS PERFILES  PARA REFERENCIARLA CON UNA O MAS PELICULAS
+-- SE AGREGA LA FUNCIONALIDAD DE ACTUALIZACIÓN EN CASCADA 
+-- -----------------------------------------------------
+
 ALTER TABLE perfil_pelicula ADD CONSTRAINT id_Perfil_Pelicula FOREIGN KEY (fk_id_Perfil) REFERENCES perfil (id_Perfil) ON UPDATE CASCADE;
+
+-- -----------------------------------------------------
+-- SE ALTERA LA TABLA PERFIL PELICULA PARA DEFINIR LOS DOS CAMPOS 
+-- CREADOS COMO LLLAVES PRIMARIAS
+-- -----------------------------------------------------
+
 ALTER TABLE perfil_pelicula ADD PRIMARY KEY (fk_id_Pelicula, fk_id_Perfil);
 
 -- -----------------------------------------------------
@@ -262,8 +345,28 @@ CREATE TABLE serie_perfil (
 fk_id_Series INT NOT NULL,
 fk_id_Perfil INT NOT NULL
 );
+
+-- -----------------------------------------------------
+-- SE ALTERA LA TABLA SERIE PERFIL PARA AGREGAR LA LLAVE FORANEA 
+-- DE EL ID DE LAS SERIES  PARA REFERENCIARLA CON UNO O MAS PERFILES
+-- SE AGREGA LA FUNCIONALIDAD DE ACTUALIZACIÓN EN CASCADA 
+-- -----------------------------------------------------
+
 ALTER TABLE serie_perfil ADD CONSTRAINT id_Serie_Perfil FOREIGN KEY (fk_id_Series) REFERENCES series (id_Series) ON UPDATE CASCADE;
+
+-- -----------------------------------------------------
+-- SE ALTERA LA TABLA SERIE PERFIL PARA AGREGAR LA LLAVE FORANEA 
+-- DE EL ID DE LAS SERIES  PARA REFERENCIARLA CON UNO O MAS PERFILES
+-- SE AGREGA LA FUNCIONALIDAD DE ACTUALIZACIÓN EN CASCADA 
+-- -----------------------------------------------------
+
 ALTER TABLE serie_perfil ADD CONSTRAINT id_Perfil_Serie FOREIGN KEY (fk_id_Perfil) REFERENCES perfil (id_Perfil) ON UPDATE CASCADE;
+
+-- -----------------------------------------------------
+-- SE ALTERA LA TABLA SERIE PERFIL PARA DEFINIR LOS DOS CAMPOS 
+-- CREADOS COMO LLLAVES PRIMARIAS
+-- -----------------------------------------------------
+
 ALTER TABLE serie_perfil ADD PRIMARY KEY (fk_id_Series, fk_id_Perfil);
 
 -- -----------------------------------------------------
@@ -300,8 +403,30 @@ CREATE TABLE capitulo_idioma (
 fk_id_Capitulos INT NOT NULL,
 fk_id_Idioma INT NOT NULL
 );
+
+-- -----------------------------------------------------
+-- SE ALTERA LA TABLA CAPITULO IDIOMA PARA AGREGAR LA LLAVE FORANEA 
+-- DE EL ID DE LOS CAPITULOS  PARA REFERENCIARLA CON UNO O MAS IDIOMAS
+-- SE AGREGA LA FUNCIONALIDAD DE ACTUALIZACIÓN EN CASCADA 
+-- -----------------------------------------------------
+
 ALTER TABLE capitulo_idioma ADD CONSTRAINT id_Capitulos_Idioma FOREIGN KEY (fk_id_Capitulos) REFERENCES capitulos (id_Capitulos) ON UPDATE CASCADE;
+
+-- -----------------------------------------------------
+-- SE ALTERA LA TABLA CAPITULO IDIOMA PARA AGREGAR LA LLAVE FORANEA 
+-- DE EL ID DE LOS IDIOMAS  PARA REFERENCIARLA CON UNO O MAS CAPITULOS
+-- SE AGREGA LA FUNCIONALIDAD DE ACTUALIZACIÓN EN CASCADA 
+-- -----------------------------------------------------
+
+
+
 ALTER TABLE capitulo_idioma ADD CONSTRAINT id_Idioma_Capitulos FOREIGN KEY (fk_id_Idioma) REFERENCES  idioma (id_Idioma) ON UPDATE CASCADE;
+
+-- -----------------------------------------------------
+-- SE ALTERA LA TABLA CAPITULO IDIOMA PARA DEFINIR LOS DOS CAMPOS 
+-- CREADOS COMO LLLAVES PRIMARIAS
+-- -----------------------------------------------------
+
 ALTER TABLE capitulo_idioma ADD PRIMARY KEY (fk_id_Capitulos, fk_id_Idioma);
 
 -- -----------------------------------------------------
