@@ -1,5 +1,5 @@
-CREATE DATABASE Netflix;
-USE Netflix;
+CREATE DATABASE Films;
+USE Films
 CREATE TABLE rol (
 id_Rol INT NOT NULL,
 nombre_Rol VARCHAR(25) NOT NULL
