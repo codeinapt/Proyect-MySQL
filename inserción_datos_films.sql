@@ -2,7 +2,7 @@
 -- SELECCION DE LA BASE DE DATOS EN LA QUE SE VA A TRABAJAR
 -- -----------------------------------------------------
 
-USE Films;
+USE Netflix;
 
 -- -----------------------------------------------------
 -- INCERSIÓN DE DATOS 
