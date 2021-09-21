@@ -2,13 +2,13 @@
 -- CREAR BASE DE DATOS FILMS
 -- -----------------------------------------------------
 
-CREATE DATABASE Films;
+CREATE DATABASE Netflix;
 
 -- -----------------------------------------------------
 -- LUEGO DE ESTAR CREADA SE SELECCIONA PARA TRABAJAR EN ELLA
 -- -----------------------------------------------------
 
-USE Films;
+USE Netflix;
 
 -- -----------------------------------------------------
 -- CREACION DE LA TABLA ROL
